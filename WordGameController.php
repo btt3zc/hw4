@@ -1,6 +1,5 @@
 <?php
-class TriviaController {
-
+class WordGameController {
     private $command;
 
     public function __construct($command) {
@@ -9,8 +8,8 @@ class TriviaController {
 
     public function run() {
         switch($this->command) {
-            case "question":
-                $this->question();
+            case "Game":
+                $this->Game();
                 break;
             case "logout":
                 $this->destroyCookies();
@@ -21,7 +20,6 @@ class TriviaController {
         }
     }
 
-    // Clear all the cookies that we've set
     private function destroyCookies() {          
         setcookie("correct", "", time() - 3600);
         setcookie("name", "", time() - 3600);
@@ -40,29 +38,25 @@ class TriviaController {
             return;
         }
 
-        include "templates/login.php";
+        include "login.html";
     }
 
-    // Load a question from the API
-    private function loadQuestion() {
-        $triviaData = json_decode(
-            file_get_contents("https://opentdb.com/api.php?amount=1&category=26&difficulty=easy&type=multiple")
-            , true);
+    private function loadWord() {
+        $triviaData = 
+            file_get_contents("https://www.cs.virginia.edu/~jh2jf/courses/cs4640/spring2022/wordlist.txt");
         // Return the question
         return $triviaData["results"][0];
     }
 
-    // Display the question template (and handle question logic)
-    public function question() {
+    public function Game() {
         // set user information for the page from the cookie
         $user = [
             "name" => $_COOKIE["name"],
             "email" => $_COOKIE["email"],
-            "score" => $_COOKIE["score"]
         ];
 
         // load the question
-        $question = $this->loadQuestion();
+        $question = $this->loadWord();
         if ($question == null) {
             die("No questions available");
         }
@@ -91,6 +85,9 @@ class TriviaController {
         // update the question information in cookies
         setcookie("answer", $question["correct_answer"], time() + 3600);
 
-        include("templates/question.php");
+        include(".php");
     }
+
+
+
 }
