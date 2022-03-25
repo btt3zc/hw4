@@ -1,13 +1,25 @@
 <?php
-// start a session
-session_start();
-  
-// instantiate controller 
+// Register the autoloader
+spl_autoload_register(function($classname) {
+    include "WordGameController.php";
+});
 
-new WordGameController();
+// Parse the query string for command
+$command = "login";
+if (isset($_GET["command"]))
+    $command = $_GET["command"];
+
+// If the user's email is not set in the cookies, then it's not
+// a valid session (they didn't get here from the login page),
+// so we should send them over to log in first before doing
+// anything else!
+if (!isset($_COOKIE["email"])) {
+    // they need to see the login
+    $command = "login";
+    session_start();
+}
 
 
-
-
-session_destroy(); 
-?>
+// Instantiate the controller and run
+$wordle = new WordGameController($command);
+$wordle->run();
