@@ -99,7 +99,7 @@ class TriviaController {
                     // case for same letters
                     //strpos($_POST["answer"][$i], $question[$i])
                     if($question[$i] == $_POST["answer"][$i] ) {
-                        echo "in word"; 
+                        echo "word "; 
                     }
                     //case for in word 
                     else {
