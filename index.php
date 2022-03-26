@@ -16,6 +16,7 @@ if (isset($_GET["command"]))
 if (!isset($_COOKIE["email"])) {
     // they need to see the login
     $command = "login";
+    session_start();
 }
 
 // Instantiate the controller and run
