@@ -23,19 +23,15 @@ class TriviaController {
 
     // Clear all the cookies that we've set
     private function destroyCookies() {          
-        setcookie("correct", "", time() - 3600);
-        setcookie("name", "", time() - 3600);
-        setcookie("email", "", time() - 3600);
-        setcookie("score", "", time() - 3600);
+        session_destroy(); 
     }
     
 
     // Display the login page (and handle login logic)
     public function login() {
         if (isset($_POST["email"]) && !empty($_POST["email"])) { /// validate the email coming in
-            setcookie("name", $_POST["name"], time() + 3600);
-            setcookie("email", $_POST["email"], time() + 3600);
-            setcookie("score", 0, time() + 3600);
+            $_SESSION["email"] = $_POST["email"]; 
+            $_SESSION["name"] = $_POST["name"]; 
             header("Location: ?command=question");
             return;
         }
@@ -45,51 +41,93 @@ class TriviaController {
 
     // Load a question from the API
     private function loadQuestion() {
-        $triviaData = json_decode(
-            file_get_contents("https://opentdb.com/api.php?amount=1&category=26&difficulty=easy&type=multiple")
-            , true);
+        
+        $file = file("https://www.cs.virginia.edu/~jh2jf/courses/cs4640/spring2022/wordlist.txt",true);
+        $wCount = count($file);
         // Return the question
-        return $triviaData["results"][0];
+        
+        if (isset($_SESSION["target_word"]) == False) {
+            $word =  trim($file[rand(0, $wCount - 1)]); 
+            $_SESSION["target_word"] = $word;
+
+            //$question = $_SESSION["target_word"];
+        }
+        return $_SESSION["target_word"];
+
     }
+    //works
+    private function addGuess() {
+        if(!isset($_SESSION["guess"])) {
+            $_SESSION["guess"] = array(); 
+        }
+
+        array_push($_SESSION["guess"],$_POST["answer"]);
+        print_r($_SESSION["guess"]); 
+    }
+
+    private function CheckWord($q,$a,$incrementi,$incrementj) {
+        strcasecmp($q[$incrementj],$a[$incrementi]); 
+            if (strcasecmp($q[$incrementj],$a[$incrementi]) == 0) {
+                return 1; // in the word, somewhere
+            } else {
+                return 2; // not in word
+            }
+                        
+    }
+
 
     // Display the question template (and handle question logic)
     public function question() {
         // set user information for the page from the cookie
         $user = [
-            "name" => $_COOKIE["name"],
-            "email" => $_COOKIE["email"],
-            "score" => $_COOKIE["score"]
+            "name" => $_SESSION["name"],
+            "email" => $_SESSION["email"],
         ];
 
-        // load the question
+        // load the word
+        //if (isset($question) == False) {
+        //    $this->loadQuestion();
+        //    $question = $_SESSION["target_word"];
+       // }
         $question = $this->loadQuestion();
-        if ($question == null) {
-            die("No questions available");
+        echo $question; 
+        if (isset($_POST["answer"])) {
+            $this->addGuess(); 
+            if(strlen($question) == strlen($_POST["answer"]) ) {
+
+                for($i = 0; $i < strlen($_POST["answer"]);  $i++) { 
+                    // case for same letters
+                    //strpos($_POST["answer"][$i], $question[$i])
+                    if($question[$i] == $_POST["answer"][$i] ) {
+                        echo "in word"; 
+                    }
+                    //case for in word 
+                    else {
+
+                        
+                        for($j = 0; $j < strlen($question);  $j++) {
+                            if ($this->CheckWord($question,$_POST["answer"], $i,$j) == 1) {
+                                echo "found "; 
+                            } else {
+                                echo "not "; 
+                            }
+                        }
+                    
+                        //echo  $_POST["answer"][$i]; 
+                        
+                    }
+                }
+            }
         }
+
+
+
+
+
 
         $message = "";
 
         // if the user submitted an answer, check it
-        if (isset($_POST["answer"])) {
-            $answer = $_POST["answer"];
-            
-            if ($_COOKIE["answer"] == $answer) {
-                // user answered correctly -- perhaps we should also be better about how we
-                // verify their answers, perhaps use strtolower() to compare lower case only.
-                $message = "<div class='alert alert-success'><b>$answer</b> was correct!</div>";
-
-                // Update the score
-                $user["score"] += 10;  
-                // Update the cookie: won't be available until next page load (stored on client)
-                setcookie("score", $_COOKIE["score"] + 10, time() + 3600);
-            } else { 
-                $message = "<div class='alert alert-danger'><b>$answer</b> was incorrect! The answer was: {$_COOKIE["answer"]}</div>";
-            }
-            setcookie("correct", "", time() - 3600);
-        }
-
-        // update the question information in cookies
-        setcookie("answer", $question["correct_answer"], time() + 3600);
 
         include("templates/question.php");
     }

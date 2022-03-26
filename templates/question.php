@@ -12,14 +12,13 @@
         <div class="container" style="margin-top: 15px;">
             <div class="row col-xs-8">
                 <h1>CS4640 Television Trivia Game</h1>
-                <h3>Hello <?=$user["name"]?>! Score: <?=$user["score"]?></h3>
+                <h3>Hello <?=$user["name"]?>! </h3>
             </div>
             <div class="row">
                 <div class="col-xs-8 mx-auto">
                 <form action="?command=question" method="post">
                     <div class="h-100 p-5 bg-light border rounded-3">
                     <h2>Question</h2>
-                    <p><?=$question["question"]?></p>
                     <input type="hidden" name="questionid" value="<?=$question["id"]?>"/>
                     </div>
                     <?=$message?>
