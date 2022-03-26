@@ -31,7 +31,7 @@
                         <input type="text" class="form-control" id="name" name="name"/>
                     </div>
                     <div class="text-center">                
-                    <button type="submit" class="btn btn-primary">Play Trivia</button>
+                    <button type="submit" class="btn btn-primary">Play Wordle</button>
                     </div>
                 </form>
                 </div>
