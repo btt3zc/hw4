@@ -12,17 +12,17 @@
         <div class="container" style="margin-top: 15px;">
             <div class="row col-xs-8">
                 <h1>CS4640 Television Trivia Game</h1>
-                <h3>Hello <?=$user["name"]?>! </h3>
+                <h3>Hello <?=$user["name"]?>! Email:<?=$user["email"]?> Guesses:<?=count($_SESSION["guess"])?> </h3>
+
             </div>
             <div class="row">
                 <div class="col-xs-8 mx-auto">
                 <form action="?command=question" method="post">
-                    <div class="h-100 p-5 bg-light border rounded-3">
-                    <h2>Question</h2>
-                    <input type="hidden" name="questionid" value="<?=$question["id"]?>"/>
                     </div>
-                    <?=$message?>
+                   
+
                     <div class="h-10 p-5 mb-3">
+                        Enter in a word
                         <input type="text" class="form-control" id="answer" name="answer" placeholder="Type your answer here">
                     </div>
                     <div class="text-center">                
