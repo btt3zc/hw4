@@ -60,10 +60,23 @@ class TriviaController {
         if(!isset($_SESSION["guess"])) {
             $_SESSION["guess"] = array(); 
         }
+    
 
         array_push($_SESSION["guess"],$_POST["answer"]);
-        print_r($_SESSION["guess"]); 
+        //print_r($_SESSION["guess"]); 
     }
+
+
+    private function addLength() {
+        if(!isset($_SESSION["guess_length"])) {
+            $_SESSION["guess_length"] = array(); 
+        
+    }
+
+}
+
+
+
 
     private function CheckWord($q,$a,$incrementi,$incrementj) {
         strcasecmp($q[$incrementj],$a[$incrementi]); 
@@ -93,25 +106,61 @@ class TriviaController {
         echo $question; 
         if (isset($_POST["answer"])) {
             $this->addGuess(); 
+            $this->addLength(); 
+
             if(strlen($question) == strlen($_POST["answer"]) ) {
 
+                print_r ($_SESSION["guess_length"]);
+                array_push($_SESSION["guess_length"], "correct word length");
+                
                 for($i = 0; $i < strlen($_POST["answer"]);  $i++) { 
                     // case for same letters
                     //strpos($_POST["answer"][$i], $question[$i])
-                    if($question[$i] == $_POST["answer"][$i] ) {
+                    if(  strcasecmp($question[$i],$_POST["answer"][$i]  == 0 )) {
                         echo "in word"; 
                     }
                     //case for in word 
                     else {
 
-                        
+                        $in_word = 0;
                         for($j = 0; $j < strlen($question);  $j++) {
                             if ($this->CheckWord($question,$_POST["answer"], $i,$j) == 1) {
-                                echo "found "; 
-                            } else {
-                                echo "not "; 
-                            }
+                                $in_word = 1; 
+                            } 
                         }
+                        //echo $in_word; 
+                    
+                        //echo  $_POST["answer"][$i]; 
+                        
+                    }
+                }
+            } else {
+                $length_1 = strlen($question); 
+                $length_2 = strlen($_POST["answer"]); 
+                if($length_1 >  $length_2 ) {
+                    array_push($_SESSION["guess_length"], "too short");
+                    $shortest = $length_2; 
+                } else {
+                    $shortest = $length_1; 
+                    array_push($_SESSION["guess_length"], "too long");
+                }
+                print_r ($_SESSION["guess_length"]); 
+                for($i = 0; $i < $shortest;  $i++) { 
+                    // case for same letters
+                    //strpos($_POST["answer"][$i], $question[$i])
+                    if(  strcasecmp($question[$i],$_POST["answer"][$i]  == 0 )) {
+                        echo "in word"; 
+                    }
+                    //case for in word 
+                    else {
+
+                        $in_word = 0;
+                        for($j = 0; $j < strlen($question);  $j++) {
+                            if ($this->CheckWord($question,$_POST["answer"], $i,$j) == 1) {
+                                $in_word = 1; 
+                            } 
+                        }
+                        //echo $in_word; 
                     
                         //echo  $_POST["answer"][$i]; 
                         
