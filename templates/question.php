@@ -42,7 +42,6 @@
                             }
                         ?>
                     </div>
-                    <?=$message?>
                     <div class="h-10 p-5 mb-3">
                         <input type="text" class="form-control" id="answer" name="answer" placeholder="Type your answer here">
                     </div>

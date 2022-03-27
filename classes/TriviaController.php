@@ -137,7 +137,11 @@ class TriviaController {
         $correct_letters = 0;
         if (isset($_POST["answer"])) { 
             array_push($_SESSION["guess"],$_POST["answer"]);
-            if(strlen($question) == strlen($_POST["answer"]) ) {
+            if(strcasecmp($question,$_POST["answer"])  == 0){
+                header("Location: ?command=gameover");
+            }
+
+            elseif(strlen($question) == strlen($_POST["answer"]) ) {
                 // lengths are the same
                 array_push($_SESSION["guess_length"], "correct word length");
                 
@@ -200,13 +204,6 @@ class TriviaController {
             }
 
         }
-
-
-
-
-
-
-        $message = "";
 
         // if the user submitted an answer, check it
 
