@@ -26,7 +26,13 @@
 
     
                                 }
-                                echo count($_SESSION["letters_in_word"]); 
+
+                                for ($i = 0; $i < count($_SESSION["letters_in_word"]); $i++) {
+                                    echo $_SESSION["letters_in_word"][$i]; 
+                                    echo "<br>"; 
+ 
+     
+                                 }
                             }
                         ?>
                     </div>

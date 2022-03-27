@@ -110,6 +110,7 @@ class TriviaController {
         $this->addGuess();
         $this->addLength(); 
         $this->correct(); 
+        $l_in_word = 0;
         if (isset($_POST["answer"])) { 
             array_push($_SESSION["guess"],$_POST["answer"]);
             if(strlen($question) == strlen($_POST["answer"]) ) {
@@ -130,10 +131,11 @@ class TriviaController {
                         for($j = 0; $j < strlen($question);  $j++) {
                             if ($this->CheckWord($question,$_POST["answer"], $i,$j) == 1) {
                                 $in_word = 1; 
-                                array_push($_SESSION["letters_in_word"],$in_word); 
+                                $l_in_word += 1;
                                 echo "enter";                                 
                                 break;
                             } 
+                            
                         }
                         //echo $in_word; 
                     
@@ -141,6 +143,7 @@ class TriviaController {
                         
                     }
                 }
+                array_push($_SESSION["letters_in_word"],$l_in_word);
             } else {
                 //lengths are not the same
                 $length_1 = strlen($question); 
@@ -166,9 +169,9 @@ class TriviaController {
                         for($j = 0; $j < strlen($question);  $j++) {
                             if ($this->CheckWord($question,$_POST["answer"], $i,$j) == 1) {
                                 $in_word = 1; 
-                                array_push($_SESSION["letters_in_word"],$in_word);
+                                $l_in_word += 1;
                                 echo "enter"; 
-
+                                break;
                             } 
                         }
                         //echo $in_word; 
@@ -177,6 +180,7 @@ class TriviaController {
                         
                     }
                 }
+                array_push($_SESSION["letters_in_word"],$l_in_word);
             }
         }
 
