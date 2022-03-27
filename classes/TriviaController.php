@@ -70,9 +70,15 @@ class TriviaController {
             $_SESSION["guess_length"] = array(); 
         
     }
-
+    
 }
 
+private function correct() {
+    if(!isset($_SESSION["letters_in_word"])) {
+        $_SESSION["letters_in_word"] = array(); 
+    
+}
+}
 
 
 
@@ -104,6 +110,7 @@ class TriviaController {
         echo $question; 
         $this->addGuess();
         $this->addLength(); 
+        $this->correct(); 
         if (isset($_POST["answer"])) { 
             array_push($_SESSION["guess"],$_POST["answer"]);
             if(strlen($question) == strlen($_POST["answer"]) ) {
@@ -114,16 +121,20 @@ class TriviaController {
                 for($i = 0; $i < strlen($_POST["answer"]);  $i++) { 
                     // case for same letters
                     //strpos($_POST["answer"][$i], $question[$i])
-                    if($question[$i] == $_POST["answer"][$i] ) {
+                    if(strcasecmp($question[$i],$_POST["answer"][$i])  == 0 ) {
                         echo "word "; 
                     }
                     //case for in word 
                     else {
-
+                        
                         $in_word = 0;
                         for($j = 0; $j < strlen($question);  $j++) {
                             if ($this->CheckWord($question,$_POST["answer"], $i,$j) == 1) {
                                 $in_word = 1; 
+                                array_push($_SESSION["letters_in_word"],$in_word); 
+                                echo "enter"; 
+                                
+                                    
                             } 
                         }
                         //echo $in_word; 
@@ -156,6 +167,9 @@ class TriviaController {
                         for($j = 0; $j < strlen($question);  $j++) {
                             if ($this->CheckWord($question,$_POST["answer"], $i,$j) == 1) {
                                 $in_word = 1; 
+                                array_push($_SESSION["letters_in_word"],$in_word);
+                                echo "enter"; 
+
                             } 
                         }
                         //echo $in_word; 
