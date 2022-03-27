@@ -21,18 +21,24 @@
                         <?php
                             if(isset($_SESSION["guess"])) {
                                 for ($i = 0; $i < count($_SESSION["guess"]); $i++) {
-                                   // echo strlen($_SESSION["guess"][$i]); 
-                                  //  echo "<br>"; 
+                                    echo "word: ";
+                                    echo $_SESSION["guess"][$i];
 
-    
-                                }
-
-                                for ($i = 0; $i < count($_SESSION["letters_in_word"]); $i++) {
+                                    echo ", word length: ";
+                                    echo strlen($_SESSION["guess"][$i]); 
+                                    
+                                    echo ", characters in word but wrong spot: ";
                                     echo $_SESSION["letters_in_word"][$i]; 
-                                    echo "<br>"; 
- 
-     
-                                 }
+
+                                    echo ", characters in word with right spot: ";
+                                    echo $_SESSION["correct_letter"][$i];
+                                    
+                                    echo ", word length: ";
+                                    echo $_SESSION["guess_length"][$i];
+                                    
+
+                                    echo "<br>";
+                                }
                             }
                         ?>
                     </div>
