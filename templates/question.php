@@ -12,7 +12,7 @@
         <div class="container" style="margin-top: 15px;">
             <div class="row col-xs-8">
                 <h1>CS4640 Television Trivia Game</h1>
-                <h3>Hello <?=$user["name"]?>! Email:<?=$user["email"]?> Guesses:<?=count($_SESSION["guess"])?> </h3>
+                <h3>Hello <?=$_SESSION["name"]?>! Email:<?=$_SESSION["email"]?> Guesses:<?=count($_SESSION["guess"])?> </h3>
             </div>
             <div class="row">
                 <div class="col-xs-8 mx-auto">
@@ -48,7 +48,7 @@
                     </div>
                     <div class="text-center">                
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="?command=logout" class="btn btn-danger">End Game</a>
+                    <a href="?command=gameover" class="btn btn-danger">Game Over</a>
                     </div>
                 </form>
                 </div>

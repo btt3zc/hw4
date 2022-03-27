@@ -10,10 +10,18 @@ class TriviaController {
     public function run() {
         switch($this->command) {
             case "question":
+                // $this->resetVariables();
                 $this->question();
                 break;
             case "logout":
                 $this->destroyCookies();
+                header("Location: ?command=login");
+            case "replay":
+                $this->resetVariables();
+                header("Location: ?command=question");
+            case "gameover":
+                $this->gameover();
+                break;
             case "login":
             default:
                 $this->login();
@@ -26,12 +34,14 @@ class TriviaController {
         session_destroy(); 
     }
     
-    private function resetVariabes() {          
-        unset(($_SESSION["target_word"]));
-        unset($_SESSION["guess"]);
-        unset($_SESSION["guess_length"]);
-        unset($_SESSION["letters_in_word"]);
-        unset($_SESSION["correct_letter"]);
+    private function resetVariables() {          
+        if (isset($_SESSION["guess"])) { 
+            unset($_SESSION["target_word"]);
+            unset($_SESSION["guess"]);
+            unset($_SESSION["guess_length"]);
+            unset($_SESSION["letters_in_word"]);
+            unset($_SESSION["correct_letter"]);
+        }
     }
 
     // Display the login page (and handle login logic)
@@ -188,6 +198,7 @@ class TriviaController {
                 array_push($_SESSION["letters_in_word"],$l_in_word);
                 array_push($_SESSION["correct_letter"],$correct_letters);
             }
+
         }
 
 
@@ -200,5 +211,10 @@ class TriviaController {
         // if the user submitted an answer, check it
 
         include("templates/question.php");
+    }
+
+    public function gameover() {
+        
+        include("templates/GameOver.php");
     }
 }
