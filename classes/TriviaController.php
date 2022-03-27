@@ -26,6 +26,13 @@ class TriviaController {
         session_destroy(); 
     }
     
+    private function resetVariabes() {          
+        unset(($_SESSION["target_word"]));
+        unset($_SESSION["guess"]);
+        unset($_SESSION["guess_length"]);
+        unset($_SESSION["letters_in_word"]);
+        unset($_SESSION["correct_letter"]);
+    }
 
     // Display the login page (and handle login logic)
     public function login() {
@@ -112,7 +119,6 @@ class TriviaController {
         //    $question = $_SESSION["target_word"];
        // }
         $question = $this->loadQuestion();
-        echo $question; 
         $this->addGuess();
         $this->addLength(); 
         $this->correct(); 
@@ -170,7 +176,6 @@ class TriviaController {
                         for($j = 0; $j < strlen($question);  $j++) {
                             if ($this->CheckWord($question,$_POST["answer"], $i,$j) == 1) {
                                 $l_in_word += 1;
-                                echo "enter"; 
                                 break;
                             } 
                         }
