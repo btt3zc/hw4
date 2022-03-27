@@ -17,11 +17,21 @@
             <div class="row">
                 <div class="col-xs-8 mx-auto">
                 <form action="?command=question" method="post">
-                    </div>
-                   
+                    <div class="h-100 p-5 bg-light border rounded-3">
+                        <?php
+                            if(isset($_SESSION["guess"])) {
+                                for ($i = 0; $i < count($_SESSION["guess"]); $i++) {
+                                   // echo strlen($_SESSION["guess"][$i]); 
+                                  //  echo "<br>"; 
 
+    
+                                }
+                                echo count($_SESSION["letters_in_word"]); 
+                            }
+                        ?>
+                    </div>
+                    <?=$message?>
                     <div class="h-10 p-5 mb-3">
-                        Enter in a word
                         <input type="text" class="form-control" id="answer" name="answer" placeholder="Type your answer here">
                     </div>
                     <div class="text-center">                
