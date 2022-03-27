@@ -69,9 +69,8 @@ class TriviaController {
         if(!isset($_SESSION["guess_length"])) {
             $_SESSION["guess_length"] = array(); 
         
+        }
     }
-
-}
 
 
 
@@ -107,7 +106,7 @@ class TriviaController {
         if (isset($_POST["answer"])) { 
             array_push($_SESSION["guess"],$_POST["answer"]);
             if(strlen($question) == strlen($_POST["answer"]) ) {
-
+                // lengths are the same
                 print_r ($_SESSION["guess_length"]);
                 array_push($_SESSION["guess_length"], "correct word length");
                 
@@ -133,6 +132,7 @@ class TriviaController {
                     }
                 }
             } else {
+                //lengths are not the same
                 $length_1 = strlen($question); 
                 $length_2 = strlen($_POST["answer"]); 
                 if($length_1 >  $length_2 ) {

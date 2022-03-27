@@ -13,7 +13,6 @@
             <div class="row col-xs-8">
                 <h1>CS4640 Television Trivia Game</h1>
                 <h3>Hello <?=$user["name"]?>! Email:<?=$user["email"]?> Guesses:<?=count($_SESSION["guess"])?> </h3>
-
             </div>
             <div class="row">
                 <div class="col-xs-8 mx-auto">
