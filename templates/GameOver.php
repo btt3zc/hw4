@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">  
@@ -19,6 +19,10 @@
                 <form action="?command=question" method="post">
                     <div class="h-100 p-5 bg-light border rounded-3">
                         <?php
+
+
+                            echo " target word: "; 
+                            
                             if(isset($_SESSION["guess"])) {
                                 for ($i = 0; $i < count($_SESSION["guess"]); $i++) {
                                     echo "word: ";
@@ -48,7 +52,7 @@
                     </div>
                     <div class="text-center">                
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="?command=logout" class="btn btn-danger">Game Over</a>
+                    <a href="?command=logout" class="btn btn-danger">End Game</a>
                     </div>
                 </form>
                 </div>

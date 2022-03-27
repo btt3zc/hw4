@@ -112,7 +112,7 @@ class TriviaController {
         //    $question = $_SESSION["target_word"];
        // }
         $question = $this->loadQuestion();
-        echo $question; 
+        //echo $question; 
         $this->addGuess();
         $this->addLength(); 
         $this->correct(); 
@@ -170,7 +170,7 @@ class TriviaController {
                         for($j = 0; $j < strlen($question);  $j++) {
                             if ($this->CheckWord($question,$_POST["answer"], $i,$j) == 1) {
                                 $l_in_word += 1;
-                                echo "enter"; 
+                               // echo "enter"; 
                                 break;
                             } 
                         }
